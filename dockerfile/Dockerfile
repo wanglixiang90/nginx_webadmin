@@ -46,7 +46,7 @@ LABEL resty_config_options_more="${RESTY_CONFIG_OPTIONS_MORE}"
 
 # These are not intended to be user-specified
 ARG _RESTY_CONFIG_DEPS="--with-openssl=/tmp/openssl-${RESTY_OPENSSL_VERSION} --with-pcre=/tmp/pcre-${RESTY_PCRE_VERSION}"
-
+ARG WEBPROC_VERSION=0.1.9
 
 # 1) Install apk dependencies
 # 2) Download and untar OpenSSL, PCRE, and OpenResty
@@ -90,9 +90,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
     && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log \
     && cd  /usr/local/bin/ \
-    && curl https://i.jpillora.com/webproc#04 | bash \
-    && curl http://gpe.bxmdev.com:9000/nginx-webadmin/docker-entrypoint.sh -o /docker-entrypoint.sh \
-    && chmod 755 -R /usr/local/bin/ /docker-entrypoint.sh \
+    && curl -fSL https://github.com/jpillora/webproc/releases/download/${WEBPROC_VERSION}/webproc_linux_amd64.gz | gzip -d - > webproc \
+    && curl https://raw.githubusercontent.com/wanglixiang90/nginx_webadmin/master/dockerfile/docker-entrypoint.sh -o /docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/webproc /docker-entrypoint.sh \
     && apk del .build-deps
 
 # Add additional binaries into PATH for convenience
