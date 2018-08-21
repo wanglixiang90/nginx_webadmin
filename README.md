@@ -17,11 +17,6 @@ docker run -d --name nginx_webadmin --net=host nginx_webadmin
   WEB_PORT：http监听端口号 
 
 # 启动自定义docker容器
-docker run -d --name nginx_webadmin \
-     --net=host \
-     -e WEB_PORT=<you_port> \
-     -e WEB_USER=<you_username> \
-     -e WEB_PASS=<you_password> \
-     nginx_webadmin
+docker run -d --name nginx_webadmin --net=host -e WEB_PORT=<you_port> -e WEB_USER=<you_username> -e WEB_PASS=<you_password> ginx_webadmin
      
      
